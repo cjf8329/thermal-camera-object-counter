@@ -1,0 +1,1 @@
+# thermal-camera-object-counter
