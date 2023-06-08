@@ -2,6 +2,7 @@ import time
 import board
 import busio
 import adafruit_mlx90640
+import numpy as np
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=800000)
 
@@ -12,17 +13,18 @@ print("MLX addr detected on I2C", [hex(i) for i in mlx.serial_number])
 # try decreasing this value to work with certain pi/camera combinations
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_2_HZ
 
-frame = [0] * 768
+getFrame_output = [0] * 768
+final_frame = np.zeros((24, 32), dtype=float)
 while True:
     try:
-        mlx.getFrame(frame)
+        mlx.getFrame(getFrame_output)
     except ValueError:
         print("val_error")
         continue
 
     for h in range(24):
         for w in range(32):
-            t = frame[h*32 + w]
-            print("%0.1f, " % t, end="")
+            pixel = getFrame_output[h*32 + w]
+            final_frame[h][w] = pixel
         print()
     print()
