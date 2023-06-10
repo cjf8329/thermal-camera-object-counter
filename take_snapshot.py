@@ -4,6 +4,7 @@ import busio
 import adafruit_mlx90640
 import numpy as np
 import cv2
+import math
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=400000)
 
@@ -19,21 +20,32 @@ w = scalar * 32
 h = scalar * 24
 getFrame_output = [0] * 768
 final_frame = np.zeros([h, w, 3])
-count = 0
 while True:
     try:
         mlx.getFrame(getFrame_output)
-        if count == 16:
-            break
-        count += 1
-    except ValueError:
-        print("val_error")
-        continue
+        #scaling factor
+        s = 10
 
-print(getFrame_output)
-final_frame = np.array(getFrame_output).reshape(24,32) * 255
+        img = np.array(getFrame_output)
+        img.shape = (24, 32)
 
-cv2.imshow("snapshot", final_frame)
-print(final_frame.shape)
-cv2.waitKey(0)
+        maxVal = math.floor(np.amax(img))
+        minVal = math.ceil(np.amin(img))
+
+        img = img - minVal
+        img = img * 255/(maxVal - minVal)
+        imgGray = img.astype(np.uint8)
+        img = cv2.applyColorMap(imgGray, cv2.COLORMAP_JET)
+
+
+        print("done.")
+
+        final = cv2.resize(img, (img.shape[1] * s, img.shape[0] * s))
+
+        cv2.imshow("final", final)
+        cv2.waitKey(50)
+    except:
+        print("err")
+        break
+
 cv2.destroyAllWindows()
