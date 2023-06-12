@@ -13,7 +13,7 @@ print("MLX addr detected on I2C", [hex(i) for i in mlx.serial_number])
 
 # if using higher refresh rates yields a 'too many retries' exception,
 # try decreasing this value to work with certain pi/camera combinations
-mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_8_HZ
+mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ
 
 scalar = 20
 w = scalar * 32
@@ -44,7 +44,7 @@ while True:
 
         cv2.imshow("final", final)
         cv2.waitKey(50)
-    except:
+    except KeyboardInterrupt:
         print("err")
         break
 
