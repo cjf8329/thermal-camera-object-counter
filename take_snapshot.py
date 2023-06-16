@@ -39,10 +39,8 @@ while True:
 
 
         print("done.", end="")
-        print('Average MLX90640 Temperature: {0:2.1f}C ({1:2.1f}F)'.\
-      format(np.mean(frame),(((9.0/5.0)*np.mean(frame))+32.0)))
 
-        final = cv2.resize(img, (img.shape[1] * s, img.shape[0] * s))
+        final = cv2.resize(norm_img, (img.shape[1] * s, img.shape[0] * s))
 
         cv2.imshow("final", final)
         cv2.waitKey(50)
