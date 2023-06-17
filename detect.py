@@ -11,7 +11,11 @@ frame = np.array(frame)
 frame.shape = (24, 32)
 
 # i'll add more thresholds later to meet requirements
+# UPDATE: Thresholds added
 thresh1 = 35
+thresh2 = 40
+thresh3 = 50
+
 # set of tuples that have already been 'claimed' by a cluster of pixels above threshold
 already_clustered = set()
 # list of tuples of form (size, temperature)
@@ -30,10 +34,17 @@ def findNeighbors(i, j, thresh):
 # then we find its cluster size
 for i in range(len(frame)):
     for j in range(len(frame[0])):
-        if ((i, j) not in already_clustered and frame[i][j] >= thresh1):
-            neighbors = findNeighbors(i, j, thresh1)
-            clusters.append((neighbors, thresh1))
+        if ((i, j) not in already_clustered): 
+            if (frame[i][j] >= thresh3):
+                neighbors = findNeighbors(i, j, thresh3)
+                clusters.append((neighbors, thresh3))
+            elif (frame[i][j] >= thresh2):
+                neighbors = findNeighbors(i, j, thresh2)
+                clusters.append((neighbors, thres2))
+            elif (frame[i][j] >= thresh1):
+                neighbors = findNeighbors(i, j, thresh1)
+                clusters.append((neighbors, thresh1))
 
-
+# printing out the clusters for the sake of testing
 for x in clusters:
     print(x)
