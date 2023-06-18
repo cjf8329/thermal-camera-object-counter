@@ -15,6 +15,7 @@ print("MLX addr detected on I2C", [hex(i) for i in mlx.serial_number])
 # try decreasing this value to work with certain pi/camera combinations
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_8_HZ
 
+
 scalar = 20  
 w = scalar * 32
 h = scalar * 24
@@ -33,7 +34,7 @@ while True:
         minVal = math.ceil(np.amin(img))
 
         norm_img = img - minVal
-        norm_img = img * 255/(maxVal - minVal)
+        norm_img = norm_img * 255/(maxVal - minVal)
         norm_imgGray = norm_img.astype(np.uint8)
         norm_img = cv2.applyColorMap(norm_imgGray, cv2.COLORMAP_JET)
 

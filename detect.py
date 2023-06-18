@@ -18,10 +18,17 @@ thresh1 = 35
 thresh2 = 40
 thresh3 = 50
 
+# distance of camera to targets, strongly suggested maximum 1 meter
+distance = 1
+
+# field of view of camera, should be 110 degrees
+FOV = 110
+
 # set of tuples that have already been 'claimed' by a cluster of pixels above threshold
 already_clustered = set()
 # list of tuples of form (size, temperature)
 clusters = []
+
 
 # this finds the size of the cluster of pixels above the threshold temperature
 def findNeighbors(i, j, thresh):
@@ -30,7 +37,19 @@ def findNeighbors(i, j, thresh):
     if (frame[i][j] >= thresh):
         already_clustered.add((i, j))
         return 1 + findNeighbors(i+1, j, thresh) + findNeighbors(i-1, j, thresh) + findNeighbors(i, j+1, thresh) + findNeighbors(i, j-1, thresh)
-    return 1
+    return 0
+
+
+# this function, when passed a distance (in meters) from the target and the number of pixels taken up by the target,
+# returns the (approximate) size of the target in meters squared. size is calculated very simply, using the approximate
+# size of each pixel based on the midway point between the center of the camera and the edge of its FOV
+def findSize(distance, pixels, fov):
+    # this might appear unintelligible, (magic constant and all), but i'll upload some napkin math to prove this at some point
+    pi = 3.1415927 # need this for radian conversion
+    pixel_size = (math.tan((fov/2) * (pi/180)) * distance / 12) ** 2
+    print("asdfsadfasdf: ", pixel_size)
+    return pixels * pixel_size
+
 
 # now we loop through the pixels, and if a pixel is above the threshold and not already part of a cluster,
 # then we find its cluster size
@@ -39,13 +58,16 @@ for i in range(len(frame)):
         if ((i, j) not in already_clustered): 
             if (frame[i][j] >= thresh3):
                 neighbors = findNeighbors(i, j, thresh3)
-                clusters.append((neighbors, thresh3))
+                size = findSize(distance, neighbors, FOV)
+                clusters.append((size, thresh3))
             elif (frame[i][j] >= thresh2):
                 neighbors = findNeighbors(i, j, thresh2)
-                clusters.append((neighbors, thresh2))
+                size = findSize(distance, neighbors, FOV)
+                clusters.append((size, thresh2))
             elif (frame[i][j] >= thresh1):
                 neighbors = findNeighbors(i, j, thresh1)
-                clusters.append((neighbors, thresh1))
+                size = findSize(distance, neighbors, FOV)
+                clusters.append((size, thresh1))
 
 # printing out the clusters for the sake of testing
 for x in clusters:
