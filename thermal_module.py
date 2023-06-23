@@ -6,6 +6,7 @@ import numpy as np
 import cv2
 import math
 import detect
+from scipy import stats
 
 #TEMPERATURE THRESHOLDS IN CELSIUS
 thresh1 = 35
@@ -41,9 +42,10 @@ while True:
 
         # loop through detected objects and do what you gotta do
         for x in range(len(temps)):
-            print("Object ", temps[x])
-            print("Mean: {mean}, Median: {median}, Mode: {mode}".format(mean=np.mean(temps[x]), median=np.median(temps[x]), mode=np.mode(temps[x])))
+            print("Object ", x)
+            print("Mean: {mean}, Median: {median}, Mode: {mode}".format(mean=np.mean(temps[x]), median=np.median(temps[x]), mode=stats.mode(temps[x])))
             print("Size: {size}".format(size=findSize(len(temps[x]))))
+            print()
 
     except KeyboardInterrupt:
         print("err")

@@ -33,11 +33,11 @@ def detect(frame_argument):
     frame255 = frame * 255
 
     # amplifying regions of contrast using threshold()
-    ret, thresh = cv2.threshold(frame255, 130, 255, cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(frame255, 100, 255, cv2.THRESH_BINARY)
     thresh = thresh.astype(np.uint8)
 
     # finding contours
-    contours, hierarchy = cv2.findContours(image=thresh, mode=cv2.RETR_LIST, method=cv2.CHAIN_APPROX_NONE)
+    __, contours, __ = cv2.findContours(image=thresh, mode=cv2.RETR_LIST, method=cv2.CHAIN_APPROX_NONE)
 
     # finding regions of heat
     temps = []
