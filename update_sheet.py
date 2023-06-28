@@ -27,6 +27,7 @@ def main(clusters):
         sheets = service.spreadsheets()
 
         for x in range(2, len(clusters)+1):
+            print("updating")
             sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!A{x}",
                                    valueInputOption="USER_ENTERED", body={"values": [[f"{x-1}"]]}).execute()
             sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!B{x}",
@@ -39,4 +40,5 @@ def main(clusters):
 
 
 if __name__ == "__main__":
-    main([(0.3, 35), (0.4, 45), (0.5, 55)])
+    #main([(0.3, 35), (0.4, 45), (0.5, 55)])
+    pass

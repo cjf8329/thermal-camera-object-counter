@@ -6,6 +6,7 @@ import numpy as np
 import cv2
 import math
 import detectV1 as detect
+import update_sheet
 from scipy import stats
 
 #TEMPERATURE THRESHOLDS IN CELSIUS
@@ -23,7 +24,7 @@ print("MLX addr detected on I2C", [hex(i) for i in mlx.serial_number])
 
 # if using higher refresh rates yields a 'too many retries' exception,
 # try decreasing this value to work with certain pi/camera combinations
-mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_8_HZ
+mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_4_HZ
 
 getFrame_output = [0] * 768
 while True:
@@ -40,6 +41,9 @@ while True:
             print("Threshold: {thresh}".format(thresh=clusters[x][1]))
             print("Size: {size}".format(size=clusters[x][0]))
             print()
+        
+        
+        update_sheet.main(clusters)
 
     except KeyboardInterrupt:
         print("err")

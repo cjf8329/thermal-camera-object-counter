@@ -29,7 +29,7 @@ pixel_size = 0.03848 * 0.03848
 
 # this finds the size of the cluster of pixels above the threshold temperature
 def findNeighbors(i, j, thresh, frame, already_clustered):
-    if (i < 0 or j < 0 or i >= len(frame[0]) or j >= len(frame) or (i, j) in already_clustered):
+    if (i < 0 or j < 0 or i >= len(frame) or j >= len(frame[0]) or (i, j) in already_clustered):
         return 0
     if (frame[i][j] >= thresh):
         already_clustered.add((i, j))
