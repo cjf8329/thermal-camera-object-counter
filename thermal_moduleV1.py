@@ -9,11 +9,6 @@ import detectV1 as detect
 import update_sheet
 from scipy import stats
 
-#TEMPERATURE THRESHOLDS IN CELSIUS
-thresh1 = 35
-thresh2 = 40
-thresh3 = 50
-
 # maybe at some point i'll stop using this constant, but for now, this works for 0.9 to 1 m
 pixel_size = 0.03848 * 0.03848
 

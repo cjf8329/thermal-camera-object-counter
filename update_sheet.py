@@ -7,7 +7,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-SPREADSHEET_ID = "1Wp5xouoNyvHaatl-YvbVhnyFnwESwxGLyIFf3T2WOSQ"
+SPREADSHEET_ID = "ENTER ID HERE"
 
 def main(clusters):
     credentials = None

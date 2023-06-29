@@ -1,0 +1,108 @@
+1. Image/setup raspberry pi if not done already
+https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
+Follow the steps on this link up through "Start up your Raspberry Pi".
+
+2. After setting up your raspberry pi, turn it on, log in, and download the folder containing these instructions.
+
+3. Right click (either in File Manager or on your desktop) the folder and select "Open in Terminal".
+
+4. Paste the following commands into the terminal, pressing enter/return after each one.
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+pip install adafruit-circuitpython-mlx90640
+pip install numpy
+pip install adafruit-blinka
+
+5. After the installations finish, enter the following command:
+sudo raspi-config
+
+6. Using the arrow keys, select "Interfacing Options"
+
+7. Select I2C
+
+8. Select <Yes>
+
+9. Select <Ok>
+
+10. Select <Yes> if prompted.
+
+11. Next, we will set up your google account to enable the google sheets api. Visit the following link:
+https://developers.google.com/sheets/api/quickstart/python
+
+12. Click the blue button labeled "Enable the API"
+
+13. Click "CREATE PROJECT"
+
+14. Enter a name and select a location for the project to be stored.
+
+15. Click "NEXT"
+
+16. Click "ENABLE"
+
+17. In the top right, click the button labeled "1" surrounded by a green circle.
+
+18. Click on the text "Enabled services: sheets.googleapis.com"
+
+19. Click the button containing three parallel horizontal lines in the top left next to the "Google Cloud" logo.
+
+20. Highlight "APIs & Services" and select "Enabled APIs & Services"
+
+21. Click the blue text labeled "+ ENABLE APIS AND SERVICES"
+
+22. Scroll down and select "Google Drive API"
+
+23. Click "ENABLE"
+
+24. Afterwards, return to this page:
+https://developers.google.com/sheets/api/quickstart/python
+
+25. Scroll down and click the blue button labeled "Go to OAuth consent screen"
+
+26. Select "External" and click "CREATE"
+
+27. Enter an app name and your email as the user support email, and your email as the developer email beneath "Developer contact information"
+
+28. Click "SAVE AND CONTINUE"
+
+29. Click "ADD OR REMOVE SCOPES"
+
+30. Search/filter "sheets" and select the ".../auth/spreadsheets" scope, then select "UPDATE"
+
+31. Click "SAVE AND CONTINUE"
+
+32. Click "ADD USERS", enter your email, and click "ADD"
+
+33. Go back to this page:
+https://developers.google.com/sheets/api/quickstart/python
+
+34. Click the blue button labeled "Go to Credentials"
+
+35. Click Create Credentials > OAuth client ID.
+
+36. Click Application type > Desktop app.
+
+37. In the Name field, type a name for the credential. This name is only shown in the Google Cloud console.
+
+38. Click Create. The OAuth client created screen appears, showing your new Client ID and Client secret.
+
+39. Click OK. The newly created credential appears under OAuth 2.0 Client IDs.
+
+40. Save the downloaded JSON file as credentials.json, and move the file to the folder containing these instructions.
+
+41. Open the file detectV1.py, and in lines 6-8 enter your temperature thresholds in celsius as thresh1, thresh2, and thresh3
+
+42. Save the file.
+
+43. In your browser, navigate to the google sheet you'd like the data to be entered into.
+
+44. In the url, you should see a long string of numbers and characters in between "https://docs.google.com/spreadsheets/d/" and "/edit?pli=1#gid=0".
+Copy this string.
+
+45. Open update_sheet.py
+
+46. In line 10, replace the text "ENTER ID HERE" with the string you just copied, surrounded by quotation marks.
+
+47. Wire your MLX90640 thermal camera to your raspberry pi according to the following diagram:
+https://cdn-learn.adafruit.com/assets/assets/000/087/387/original/adafruit_products_MLX90640_RasPi_STEMMA_bb.png?1579806426
+
+48. Switch to your open terminal window, and enter the following command:
+python3 thermal_moduleV1.py
