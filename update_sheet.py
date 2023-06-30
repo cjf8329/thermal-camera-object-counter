@@ -7,7 +7,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-SPREADSHEET_ID = "1LBlRWUPNBCsPmvbVSTvjgoD1lzwUKfpdyIJT1Sj_F-4"
+SPREADSHEET_ID = "ENTER ID HERE"
 
 FIRST_ROW = 2
 
@@ -34,19 +34,18 @@ def main(clusters):
         service = build("sheets", "v4", credentials=credentials)
         sheets = service.spreadsheets()
 
-        for x in range(FIRST_ROW, len(clusters)+1):
+        for x in range(FIRST_ROW, len(clusters)+FIRST_ROW):
             print("updating")
             sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{OBJECT_NUMBER_COLUMN}{x}",
-                                   valueInputOption="USER_ENTERED", body={"values": [[f"{x-1}"]]}).execute()
+                                   valueInputOption="USER_ENTERED", body={"values": [[f"{x-FIRST_ROW}"]]}).execute()
             sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{THRESHOLD_COLUMN}{x}",
-                                   valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-1][1]}"]]}).execute()
+                                   valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-FIRST_ROW][1]}"]]}).execute()
             sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{SIZE_COLUMN}{x}",
-                                   valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-1][0]}"]]}).execute()
+                                   valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-FIRST_ROW][0]}"]]}).execute()
 
     except HttpError as error:
         print(error)
 
 
 if __name__ == "__main__":
-    #main([(0.3, 35), (0.4, 45), (0.5, 55)])
     pass
