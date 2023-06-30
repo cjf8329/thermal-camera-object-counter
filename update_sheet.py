@@ -9,6 +9,14 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 SPREADSHEET_ID = "ENTER ID HERE"
 
+FIRST_ROW = 2
+
+OBJECT_NUMBER_COLUMN = "A"
+
+THRESHOLD_COLUMN= "B"
+
+SIZE_COLUMN = "C"
+
 def main(clusters):
     credentials = None
     if os.path.exists("token.json"):
@@ -26,13 +34,13 @@ def main(clusters):
         service = build("sheets", "v4", credentials=credentials)
         sheets = service.spreadsheets()
 
-        for x in range(2, len(clusters)+1):
+        for x in range(FIRST_ROW, len(clusters)+1):
             print("updating")
-            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!A{x}",
+            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{OBJECT_NUMBER_COLUMN}{x}",
                                    valueInputOption="USER_ENTERED", body={"values": [[f"{x-1}"]]}).execute()
-            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!B{x}",
+            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{THRESHOLD_COLUMN}{x}",
                                    valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-1][1]}"]]}).execute()
-            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!C{x}",
+            sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Sheet1!{SIZE_COLUMN}{x}",
                                    valueInputOption="USER_ENTERED", body={"values": [[f"{clusters[x-1][0]}"]]}).execute()
 
     except HttpError as error:
