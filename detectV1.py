@@ -5,7 +5,7 @@ import math
 # UPDATE: Thresholds added
 thresh1 = 35
 thresh2 = 40
-thresh3 = 50
+thresh3 = 55
 
 # distance of camera to targets, strongly suggested maximum 1 meter
 distance = 1

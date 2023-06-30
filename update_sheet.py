@@ -7,7 +7,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-SPREADSHEET_ID = "ENTER ID HERE"
+SPREADSHEET_ID = "1LBlRWUPNBCsPmvbVSTvjgoD1lzwUKfpdyIJT1Sj_F-4"
 
 FIRST_ROW = 2
 
